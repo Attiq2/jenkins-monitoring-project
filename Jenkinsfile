@@ -18,7 +18,7 @@ pipeline {
         stage('Checkout DevOps Intern Project') {
             steps {
                 git branch: 'main',
-                    url: 'git@github.com:Attiq2/devops-intern-project.git',
+                    url: 'git@github.com:Attiq2/jenkins-monitoring-project.git',
                     credentialsId: 'jenkins-github-ssh'
             }
         }
