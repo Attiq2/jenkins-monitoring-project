@@ -1,28 +1,47 @@
 pipeline {
-    agent any
+    agent { label 'ubuntu-agent' }
+
+    environment {
+        // Add any environment variables if needed
+        DOCKER_HOST = 'unix:///var/run/docker.sock'
+    }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Monitoring Project') {
             steps {
-                git 'https://github.com/Attiq2/devops-intern-project.git'
+                git branch: 'main',
+                    url: 'git@github.com:Attiq2/jenkins-monitoring-project.git',
+                    credentialsId: 'jenkins-github-ssh'
+            }
+        }
+
+        stage('Checkout DevOps Intern Project') {
+            steps {
+                git branch: 'main',
+                    url: 'git@github.com:Attiq2/devops-intern-project.git',
+                    credentialsId: 'jenkins-github-ssh'
             }
         }
 
         stage('Build & Deploy Monitoring Stack') {
             steps {
-                sh '''
-                cd monitoring
-                docker-compose down -v || true
-                docker-compose up -d
-                '''
+                script {
+                    // Example: deploy Prometheus and Grafana using docker-compose
+                    sh '''
+                        cd monitoring
+                        docker-compose up -d
+                    '''
+                }
             }
         }
     }
 
     post {
-        always {
-            sh 'docker ps'
+        success {
+            echo 'Monitoring stack deployed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check logs for errors.'
         }
     }
 }
-
