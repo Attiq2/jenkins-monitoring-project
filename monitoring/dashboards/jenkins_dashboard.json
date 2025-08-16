@@ -1,0 +1,45 @@
+{
+  "id": null,
+  "title": "Jenkins CI/CD Dashboard",
+  "tags": ["jenkins", "ci", "prometheus"],
+  "timezone": "browser",
+  "schemaVersion": 27,
+  "version": 1,
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Build Success Rate",
+      "targets": [
+        {
+          "expr": "rate(jenkins_job_last_build_result{result=\"SUCCESS\"}[5m])",
+          "legendFormat": "Success"
+        },
+        {
+          "expr": "rate(jenkins_job_last_build_result{result=\"FAILURE\"}[5m])",
+          "legendFormat": "Failure"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Build Duration",
+      "targets": [
+        {
+          "expr": "avg(jenkins_job_last_build_duration_milliseconds) by (job)",
+          "legendFormat": "{{job}}"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Queued Jobs",
+      "targets": [
+        {
+          "expr": "jenkins_queue_size_value",
+          "legendFormat": "Queue"
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,32 @@
+
+---
+
+### 📄 `docs/architecture.png`  
+This should be a simple diagram showing:
+
+- **Prometheus** scraping metrics from:
+  - Node Exporter  
+  - Prometheus itself  
+  - Any other exporters  
+- **Grafana** connecting to Prometheus for visualization  
+
+📌 Example Diagram (you will create/save as PNG):  
+
+      +-------------------+
+      |   Node Exporter   |
+      | (System Metrics)  |
+      +-------------------+
+               ↑
+               |
+    +------------------+-----------------+
+    |          Prometheus                |
+    |  (Collects metrics from exporters) |
+    +------------------+-----------------+
+               |
+               ↓
+      +-------------------+
+      |     Grafana       |
+      |  (Visualization)  |
+      +-------------------+
+
+
