@@ -18,7 +18,7 @@ pipeline {
         stage('Checkout DevOps Intern Project') {
             steps {
                 git branch: 'main',
-                    url: 'git@github.com:Attiq2/jenkins-monitoring-project.git',
+                    url: 'git@github.com:Attiq2/devops-intern-project.git',   // ✅ correct repo
                     credentialsId: 'jenkins-github-ssh'
             }
         }
@@ -26,7 +26,6 @@ pipeline {
         stage('Build & Deploy Monitoring Stack') {
             steps {
                 script {
-                    // Example: deploy Prometheus and Grafana using docker-compose
                     sh '''
                         cd monitoring
                         docker-compose up -d
@@ -38,10 +37,10 @@ pipeline {
 
     post {
         success {
-            echo 'Monitoring stack deployed successfully!'
+            echo '✅ Monitoring stack deployed successfully!'
         }
         failure {
-            echo 'Pipeline failed. Check logs for errors.'
+            echo '❌ Pipeline failed. Check logs for errors.'
         }
     }
 }
