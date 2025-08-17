@@ -1,3 +1,4 @@
+
 pipeline {
     agent { label 'ubuntu-agent' }
 
@@ -28,6 +29,9 @@ pipeline {
                 script {
                     sh '''
                         cd monitoring
+                        docker-compose down -v --remove-orphans || true
+                        docker system prune -af || true
+                        docker-compose pull
                         docker-compose up -d
                     '''
                 }
